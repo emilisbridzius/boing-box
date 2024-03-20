@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core.Common;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,6 +19,10 @@ public class Menu : MonoBehaviour
     public Slider forceSlider, sizeSlider;
     public TextMeshProUGUI forceText, sizeText;
     public Toggle gravityToggle;
+    public InputField forceInput, sizeInput;
+    public Dropdown prefabMeshSelect;
+
+    public GameObject poleM;
 
     public float returnSpeed;
 
@@ -79,6 +84,13 @@ public class Menu : MonoBehaviour
         forceText.text = shoot.force.ToString("F0");
     }
 
+    public void ForceInput()
+    {
+        string forceInputTemp = forceInput.ToString();
+        float forceFloat = forceInputTemp.ParseLargeInteger();
+        shoot.force = forceFloat;
+    }
+
     public void SizeSlider()
     {
         shoot.size = sizeSlider.value;
@@ -90,6 +102,37 @@ public class Menu : MonoBehaviour
         }
         shoot.tempPrefab.transform.localScale = newScale;
         sizeText.text = shoot.size.ToString("F1");
+    }
+
+    public void ChangePrefabMesh()
+    {
+        prefabs = GameObject.FindGameObjectsWithTag("SpherePrefab");
+        if (prefabMeshSelect.value == 0)
+        {
+            foreach (GameObject go in prefabs)
+            {
+                var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                shoot.tempPrefab.GetComponent<MeshFilter>().mesh = sphere.GetComponent<MeshFilter>().sharedMesh;
+            }
+        }
+
+        if (prefabMeshSelect.value == 1)
+        {
+            foreach (GameObject go in prefabs)
+            {
+                var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                shoot.tempPrefab.GetComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().sharedMesh;
+            }
+        }
+
+        if (prefabMeshSelect.value == 2)
+        {
+            foreach (GameObject go in prefabs)
+            {
+                var pole = poleM.GetComponent<MeshFilter>();
+                shoot.tempPrefab.GetComponent<MeshFilter>().mesh = pole.sharedMesh;
+            }
+        }
     }
 
     public void ToggleSpawnedGravity()
