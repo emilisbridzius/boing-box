@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
 
     public Slider forceSlider, sizeSlider, bounceSlider;
     public TextMeshProUGUI forceText, sizeText, bounceText;
-    public Toggle gravityToggle;
+    public Toggle gravityToggle, explosionToggle;
     public InputField forceInput, sizeInput;
     public Dropdown pms;
 
@@ -191,15 +191,17 @@ public class Menu : MonoBehaviour
         if (prefabControl.explode == true)
         {
             prefabControl.explode = false;
+            explosionToggle.isOn = false;
         }
         else if (prefabControl.explode == false)
         {
             prefabs = GameObject.FindGameObjectsWithTag("SpherePrefab");
             foreach (GameObject go in prefabs)
             {
-                
+                prefabControl.Explode();
             }
             prefabControl.explode = true;
+            explosionToggle.isOn = true;
         }
     }
 

@@ -7,19 +7,26 @@ public class PrefabControl : MonoBehaviour
     public GameObject player;
     public PhysicMaterial prefabPhysics;
     public ParticleSystem explosionEffect;
+    public MeshFilter mesh;
+    public MeshRenderer mat;
+    public Rigidbody rb;
+    public Collider col;
     public float returnSpeed;
     public bool canBeDestroyed, explode;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("MainCamera");
+        mesh = transform.GetComponent<MeshFilter>();
+        mat = transform.GetComponent<MeshRenderer>();
+        rb = transform.GetComponent<Rigidbody>();
+        col = transform.GetComponent<Collider>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (explode)
         {
-            gameObject.SetActive(false);
             StartCoroutine(Explode());
         }
     }
@@ -38,7 +45,16 @@ public class PrefabControl : MonoBehaviour
 
     public IEnumerator Explode()
     {
-        Instantiate(explosionEffect, transform.position, transform.rotation);
-        yield return null;
+        mesh = null;
+        mat = null;
+        rb = null;
+        col = null;
+        var expl = Instantiate(explosionEffect, transform.position, transform.rotation);
+        expl.Play();
+        while (explosionEffect.isPlaying)
+        {
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 }

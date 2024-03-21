@@ -6,6 +6,7 @@ public class Shoot : MonoBehaviour
 {
     public Transform spawnPos;
     public GameObject tempPrefab;
+    public FirstPersonCam fps;
     public float force, size;
     public bool canShoot;
 
@@ -16,6 +17,7 @@ public class Shoot : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetMouseButtonDown(0) && canShoot)
         {
             GameObject spawned = Instantiate(tempPrefab, spawnPos.position, spawnPos.rotation);

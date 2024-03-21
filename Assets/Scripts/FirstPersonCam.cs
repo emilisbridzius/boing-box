@@ -10,6 +10,7 @@ public class FirstPersonCam : MonoBehaviour
     public bool canLook;
     public LayerMask teleportLayer;
     public GameObject teleportMarker;
+    public Shoot shoot;
     
     float xRotation, yRotation;
 
@@ -40,25 +41,21 @@ public class FirstPersonCam : MonoBehaviour
             orientation.rotation = Quaternion.Euler(0, yRotation, 0);
         }
 
-        RaycastHit hit;
+        RaycastHit telehit;
         if (Input.GetKey(KeyCode.LeftShift) && 
-            Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, teleportLayer))
+            Physics.Raycast(transform.position, transform.forward, out telehit, Mathf.Infinity, teleportLayer))
         {
-            Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.green);
+            Debug.DrawRay(transform.position, transform.forward * telehit.distance, Color.green);
             teleportMarker.SetActive(true);
-            teleportMarker.transform.position = hit.point;
+            teleportMarker.transform.position = telehit.point;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) &&
-            Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, teleportLayer))
+            Physics.Raycast(transform.position, transform.forward, out telehit, Mathf.Infinity, teleportLayer))
         {
-            Vector3 telePos = hit.point;
+            Vector3 telePos = telehit.point;
             transform.position = new Vector3(telePos.x, transform.position.y, telePos.z);
             teleportMarker.SetActive(false);
         }
-    }
-
-    public void Teleport()
-    {
 
     }
 }
