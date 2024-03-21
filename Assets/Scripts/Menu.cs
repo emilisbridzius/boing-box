@@ -14,24 +14,30 @@ public class Menu : MonoBehaviour
     public ParticleSystem despawnEffect;
     public FirstPersonCam camControl;
     public Shoot shoot;
+    public PrefabControl prefabControl;
     public ReturnCollider returnCol;
 
-    public Slider forceSlider, sizeSlider;
-    public TextMeshProUGUI forceText, sizeText;
+    public Slider forceSlider, sizeSlider, bounceSlider;
+    public TextMeshProUGUI forceText, sizeText, bounceText;
     public Toggle gravityToggle;
     public InputField forceInput, sizeInput;
-    public Dropdown prefabMeshSelect;
+    public Dropdown pms;
 
     public GameObject poleM;
 
     public float returnSpeed;
 
-    private void Start()
+    public void Start()
     {
         menu.SetActive(false);
         crosshair.SetActive(true);
         shoot.tempPrefab.GetComponent<Rigidbody>().useGravity = true;
         shoot.tempPrefab.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        bounceSlider.value = prefabControl.prefabPhysics.bounciness;
+        pms = FindObjectOfType<Dropdown>();
+        pms.onValueChanged.AddListener(delegate {
+            DropdownValueChanged(pms);
+        });
     }
 
     private void Update()
@@ -104,35 +110,56 @@ public class Menu : MonoBehaviour
         sizeText.text = shoot.size.ToString("F1");
     }
 
-    public void ChangePrefabMesh()
+    public void BounceSlider()
+    {
+        prefabControl.prefabPhysics.bounciness = bounceSlider.value;
+        prefabs = GameObject.FindGameObjectsWithTag("SpherePrefab");
+        foreach (GameObject go in prefabs)
+        {
+            go.GetComponent<PrefabControl>().prefabPhysics.bounciness = bounceSlider.value;
+        }
+        bounceText.text = bounceSlider.value.ToString("F1");
+    }
+
+    public void DropdownValueChanged(Dropdown change)
+    {
+        if (change.value == 0)
+        {
+            SphereSelect();
+        }
+        else if (change.value == 1)
+        {
+            CubeSelect();
+        }
+        else if (change.value == 2)
+        {
+            PoleSelect();
+        }
+    }
+
+    public void SphereSelect()
     {
         prefabs = GameObject.FindGameObjectsWithTag("SpherePrefab");
-        if (prefabMeshSelect.value == 0)
+        foreach (GameObject go in prefabs)
         {
-            foreach (GameObject go in prefabs)
-            {
-                var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                shoot.tempPrefab.GetComponent<MeshFilter>().mesh = sphere.GetComponent<MeshFilter>().sharedMesh;
-            }
+            var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            shoot.tempPrefab.GetComponent<MeshFilter>().mesh = sphere.GetComponent<MeshFilter>().sharedMesh;
         }
+    }
 
-        if (prefabMeshSelect.value == 1)
+    public void CubeSelect()
+    {
+        prefabs = GameObject.FindGameObjectsWithTag("SpherePrefab");
+        foreach (GameObject go in prefabs)
         {
-            foreach (GameObject go in prefabs)
-            {
-                var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                shoot.tempPrefab.GetComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().sharedMesh;
-            }
+            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            shoot.tempPrefab.GetComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().sharedMesh;
         }
+    }
 
-        if (prefabMeshSelect.value == 2)
-        {
-            foreach (GameObject go in prefabs)
-            {
-                var pole = poleM.GetComponent<MeshFilter>();
-                shoot.tempPrefab.GetComponent<MeshFilter>().mesh = pole.sharedMesh;
-            }
-        }
+    public void PoleSelect()
+    {
+
     }
 
     public void ToggleSpawnedGravity()

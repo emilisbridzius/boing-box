@@ -5,6 +5,7 @@ using UnityEngine;
 public class PrefabControl : MonoBehaviour
 {
     public GameObject player;
+    public PhysicMaterial prefabPhysics;
     public float returnSpeed;
     public bool canBeDestroyed;
 
