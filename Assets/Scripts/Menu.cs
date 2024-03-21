@@ -186,6 +186,23 @@ public class Menu : MonoBehaviour
         }
     }
 
+    public void ToggleExplosion()
+    {
+        if (prefabControl.explode == true)
+        {
+            prefabControl.explode = false;
+        }
+        else if (prefabControl.explode == false)
+        {
+            prefabs = GameObject.FindGameObjectsWithTag("SpherePrefab");
+            foreach (GameObject go in prefabs)
+            {
+                
+            }
+            prefabControl.explode = true;
+        }
+    }
+
     public void ReturnAllPrefabs()
     {
         prefabs = GameObject.FindGameObjectsWithTag("SpherePrefab");
