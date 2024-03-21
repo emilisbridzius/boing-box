@@ -198,7 +198,7 @@ public class Menu : MonoBehaviour
             prefabs = GameObject.FindGameObjectsWithTag("SpherePrefab");
             foreach (GameObject go in prefabs)
             {
-                prefabControl.Explode();
+                
             }
             prefabControl.explode = true;
             explosionToggle.isOn = true;

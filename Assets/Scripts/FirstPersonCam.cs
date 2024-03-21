@@ -11,7 +11,8 @@ public class FirstPersonCam : MonoBehaviour
     public LayerMask teleportLayer;
     public GameObject teleportMarker;
     public Shoot shoot;
-    
+
+    public RaycastHit viewHit;
     float xRotation, yRotation;
 
     private void Start()
@@ -45,7 +46,6 @@ public class FirstPersonCam : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && 
             Physics.Raycast(transform.position, transform.forward, out telehit, Mathf.Infinity, teleportLayer))
         {
-            Debug.DrawRay(transform.position, transform.forward * telehit.distance, Color.green);
             teleportMarker.SetActive(true);
             teleportMarker.transform.position = telehit.point;
         }
@@ -57,5 +57,6 @@ public class FirstPersonCam : MonoBehaviour
             teleportMarker.SetActive(false);
         }
 
+        Physics.Raycast(transform.position, transform.forward, out viewHit, Mathf.Infinity);
     }
 }

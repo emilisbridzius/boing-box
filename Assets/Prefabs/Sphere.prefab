@@ -57,7 +57,7 @@ MonoBehaviour:
   col: {fileID: 0}
   returnSpeed: 50
   canBeDestroyed: 0
-  explode: 1
+  explode: 0
 --- !u!135 &8333042582983299815
 SphereCollider:
   m_ObjectHideFlags: 0
