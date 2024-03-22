@@ -28,6 +28,7 @@ public class PrefabControl : MonoBehaviour
         if (explode)
         {
             StartCoroutine(Explode());
+            Destroy(gameObject);
         }
     }
 
@@ -50,11 +51,6 @@ public class PrefabControl : MonoBehaviour
         rb = null;
         col = null;
         var expl = Instantiate(explosionEffect, transform.position, transform.rotation);
-        expl.Play();
-        while (explosionEffect.isPlaying)
-        {
-            yield return null;
-        }
-        Destroy(gameObject);
+        yield return null;
     }
 }

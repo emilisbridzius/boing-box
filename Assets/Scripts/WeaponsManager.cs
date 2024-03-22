@@ -9,9 +9,7 @@ public class WeaponsManager : MonoBehaviour
 
     private void Start()
     {
-        spawnerEquipped = true;
-        handgunEquipped = false;
-        gravGunEquipped = false;
+        EquipSpawner();
     }
 
     private void Update()
@@ -38,6 +36,7 @@ public class WeaponsManager : MonoBehaviour
         handgunEquipped = false;
         gravGunEquipped = false;
 
+        handgun.SetActive(false);
     }
 
     public void EquipHandgun()
@@ -46,6 +45,7 @@ public class WeaponsManager : MonoBehaviour
         spawnerEquipped = false;
         gravGunEquipped = false;
 
+        handgun.SetActive(true);
     }
 
     public void EquipGravGun()
@@ -54,5 +54,6 @@ public class WeaponsManager : MonoBehaviour
         spawnerEquipped = false;
         handgunEquipped = false;
 
+        handgun.SetActive(false);
     }
 }

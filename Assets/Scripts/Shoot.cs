@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    public Transform spawnPos;
+    public Transform spawnPos, fireEffectPos;
+    public ParticleSystem hitEffect, fireEffect;
     public GameObject tempPrefab;
     public FirstPersonCam fps;
     public WeaponsManager wepM;
@@ -20,12 +21,14 @@ public class Shoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && canShoot && wepM.spawnerEquipped)
         {
+            RemoveStoppedParticles();
             SpawnObject();
         }
         
         if (Input.GetMouseButtonDown(0) && canShoot && wepM.handgunEquipped)
         {
-            //FireHandgun();
+            RemoveStoppedParticles();
+            FireHandgun();
         }
         
         if (Input.GetMouseButton(0) && canShoot && wepM.gravGunEquipped)
@@ -46,7 +49,9 @@ public class Shoot : MonoBehaviour
         if (fps.viewHit.rigidbody != null)
         {
             Rigidbody rb = fps.viewHit.rigidbody;
-            rb.AddForce(transform.forward, ForceMode.Impulse);
+            rb.AddForce(transform.forward * handgunForce, ForceMode.Impulse);
+            Instantiate(hitEffect, fps.viewHit.point, Quaternion.identity);
+            Instantiate(fireEffect, fireEffectPos.transform.position, Quaternion.identity);
         }
     }
 
@@ -58,5 +63,17 @@ public class Shoot : MonoBehaviour
     public void ScaleObject()
     {
 
+    }
+
+    public void RemoveStoppedParticles()
+    {
+        ParticleSystem[] effects = FindObjectsOfType<ParticleSystem>();
+        foreach (ParticleSystem effect in effects)
+        {
+            if (effect.isStopped)
+            {
+                Destroy(effect.gameObject);
+            }
+        }
     }
 }

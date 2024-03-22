@@ -1060,6 +1060,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224357062}
   m_CullTransparentMesh: 1
+--- !u!1 &240314958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 240314959}
+  m_Layer: 0
+  m_Name: FireEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &240314959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240314958}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.01247, y: 0.003553, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 864680161038637810}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &276505964
 GameObject:
   m_ObjectHideFlags: 0
@@ -4067,12 +4098,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 180060341}
+  fireEffectPos: {fileID: 240314959}
+  hitEffect: {fileID: 7522193142380711941, guid: a7a7b83da795df44486742b5672a950f, type: 3}
+  fireEffect: {fileID: 2881332098814467265, guid: a1a7100a0bb1aaf44a69220b79204f1d, type: 3}
   tempPrefab: {fileID: 2435819322145508999, guid: e423b14a72d415c4989b8ac9a9f9ede0, type: 3}
   fps: {fileID: 963194229}
   wepM: {fileID: 1654158371}
   force: 2000
   size: 0.5
-  handgunForce: 30
+  handgunForce: 300
   canShoot: 0
 --- !u!1 &963779858
 GameObject:
@@ -9245,6 +9279,7 @@ Transform:
   m_LocalScale: {x: 30, y: 30, z: -30}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 240314959}
   - {fileID: 6197864209660651485}
   - {fileID: 2037156860649584090}
   - {fileID: 2628280991925957790}
