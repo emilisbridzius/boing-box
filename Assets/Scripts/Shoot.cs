@@ -57,7 +57,10 @@ public class Shoot : MonoBehaviour
 
     public void SuspendObject()
     {
-
+        if (fps.viewHit.rigidbody != null)
+        {
+            Rigidbody rb = fps.viewHit.rigidbody;
+        }
     }
 
     public void ScaleObject()
